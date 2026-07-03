@@ -31,14 +31,14 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="border-t border-paper/10 px-6 py-28 md:py-40">
+    <section id="services" className="rule-refract px-6 py-28 md:py-40">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <p className="mb-4 text-xs uppercase tracking-[0.22em] text-paper/40">
+          <p className="mb-4 text-xs uppercase tracking-[0.22em] text-paper/45">
             What we do
           </p>
-          <h2 className="max-w-2xl font-display text-4xl font-normal leading-[1.05] tracking-tight text-paper md:text-5xl">
-            Everything a brand needs to be felt.
+          <h2 className="max-w-2xl font-display text-4xl font-light leading-[1.05] tracking-tight text-paper md:text-5xl">
+            We make the thing, not just the deck.
           </h2>
           <PlaceholderNote>confirm exact service groups</PlaceholderNote>
         </Reveal>

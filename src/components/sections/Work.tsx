@@ -1,14 +1,18 @@
 import Reveal from "@/components/Reveal";
+import { Accent } from "@/components/ui/Accent";
 import { PlaceholderNote, PlaceholderVisual } from "@/components/ui/Placeholder";
 
 /**
  * The emotional peak of the page. Two full-width, ALTERNATING feature panels
  * (not a grid) — image one side, copy the other, flipping each time. This is
- * where the work is the picture and gets the most room and the strongest reveal.
+ * where the work is the picture: the visuals bleed wider than the text sections,
+ * get the most vertical air, and the strongest (clip) reveal.
+ *
+ * No 01/02 numbering — two parallel projects aren't a sequence. The tag leads,
+ * because the tag encodes something true about each piece.
  */
 
 type Feature = {
-  index: string;
   title: string;
   tag: string;
   body: string;
@@ -18,7 +22,6 @@ type Feature = {
 
 const features: Feature[] = [
   {
-    index: "01",
     title: "Psalm 23 Shopping Center",
     tag: "Campaign · Content · Ecommerce",
     body: "A culturally grounded Nestlé campaign built on real Ghanaian memory — Milo, Cerelac, Lactogen; the tastes people grew up on. The emotional 'Grew Up On It' story sits on top, while underneath a Mobile Money ecommerce flow turns that feeling into wholesale conversion.",
@@ -26,7 +29,6 @@ const features: Feature[] = [
     note: "confirm 2–3 sentence write-up + real campaign visuals",
   },
   {
-    index: "02",
     title: "VivaLoKs",
     tag: "Brand · Content · Social",
     body: "A premium interlocking loc system. We built the content strategy and an installation spotlight series that positioned VivaLoKs as aspirational — a considered choice, not a commodity.",
@@ -37,23 +39,28 @@ const features: Feature[] = [
 
 function FeaturePanel({ feature, reversed }: { feature: Feature; reversed: boolean }) {
   return (
-    <Reveal y={44}>
-      <article className="grid items-center gap-10 md:grid-cols-2 md:gap-16">
-        {/* Visual */}
-        <div className={reversed ? "md:order-2" : "md:order-1"}>
+    <article className="grid items-center gap-8 md:grid-cols-12 md:gap-14">
+      {/* Visual — bleeds wider (7 of 12 cols), clip reveal */}
+      <div
+        className={`overflow-hidden rounded-sm md:col-span-7 ${
+          reversed ? "md:order-2" : "md:order-1"
+        }`}
+      >
+        <Reveal scale={1.06} y={0}>
           <PlaceholderVisual
             label={feature.visualLabel}
-            className="aspect-[4/3] w-full"
+            className="aspect-[3/2] w-full"
           />
-        </div>
+        </Reveal>
+      </div>
 
-        {/* Copy */}
-        <div className={reversed ? "md:order-1" : "md:order-2"}>
-          <span className="font-display text-sm text-gold">{feature.index}</span>
-          <p className="mt-4 text-xs uppercase tracking-[0.2em] text-paper/40">
+      {/* Copy — narrower (5 of 12 cols) */}
+      <div className={`md:col-span-5 ${reversed ? "md:order-1" : "md:order-2"}`}>
+        <Reveal y={36}>
+          <p className="text-xs uppercase tracking-[0.2em] text-refract-cool/80">
             {feature.tag}
           </p>
-          <h3 className="mt-3 font-display text-3xl font-normal leading-tight tracking-tight text-paper md:text-4xl">
+          <h3 className="mt-4 font-display text-3xl font-light leading-tight tracking-tight text-paper md:text-5xl">
             {feature.title}
           </h3>
           <p className="mt-6 max-w-prose text-base leading-relaxed text-paper/70">
@@ -62,29 +69,36 @@ function FeaturePanel({ feature, reversed }: { feature: Feature; reversed: boole
           <div>
             <PlaceholderNote>{feature.note}</PlaceholderNote>
           </div>
-        </div>
-      </article>
-    </Reveal>
+        </Reveal>
+      </div>
+    </article>
   );
 }
 
 export default function Work() {
   return (
-    <section id="work" className="border-t border-paper/10 px-6 py-28 md:py-40">
-      <div className="mx-auto max-w-6xl">
+    <section
+      id="work"
+      className="rule-refract px-6 py-32 md:py-52"
+      style={{
+        background:
+          "radial-gradient(90% 60% at 15% 0%, rgba(108,123,214,0.07), transparent 55%)",
+      }}
+    >
+      <div className="mx-auto max-w-7xl">
         <Reveal>
-          <p className="mb-4 text-xs uppercase tracking-[0.22em] text-paper/40">
+          <p className="mb-5 text-xs uppercase tracking-[0.22em] text-paper/45">
             Selected work
           </p>
-          <h2 className="max-w-2xl font-display text-4xl font-normal leading-[1.05] tracking-tight text-paper md:text-6xl">
-            The work is the proof.
+          <h2 className="max-w-3xl font-display text-4xl font-light leading-[1.02] tracking-tight text-paper md:text-7xl">
+            The work is the <Accent>proof</Accent>.
           </h2>
         </Reveal>
 
-        <div className="mt-20 space-y-28 md:mt-28 md:space-y-40">
+        <div className="mt-24 space-y-32 md:mt-32 md:space-y-52">
           {features.map((feature, i) => (
             <FeaturePanel
-              key={feature.index}
+              key={feature.title}
               feature={feature}
               reversed={i % 2 === 1}
             />

@@ -41,3 +41,27 @@ h6 {
   outline: 2px solid var(--color-gold);
   outline-offset: 3px;
 }
+
+/*
+  Section divider as "light through glass": the color comes from refraction,
+  not a painted hairline. This is the page's small unifying signature — every
+  section break is the crystal's spectrum, cool bleeding to warm.
+*/
+.rule-refract {
+  position: relative;
+}
+.rule-refract::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--color-refract-cool) 55%, transparent) 28%,
+    color-mix(in oklab, var(--color-paper) 30%, transparent) 50%,
+    color-mix(in oklab, var(--color-refract-warm) 55%, transparent) 72%,
+    transparent 100%
+  );
+}

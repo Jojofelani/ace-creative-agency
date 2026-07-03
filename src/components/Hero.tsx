@@ -49,14 +49,15 @@ export default function Hero() {
       ref={sectionRef}
       style={{
         position: "relative",
-        height: "100vh",
+        height: "100svh",
         width: "100%",
         background: "#0B0B0F",
         overflow: "hidden",
       }}
     >
-      {/* 3D layer */}
-      <div style={{ position: "absolute", inset: 0 }}>
+      {/* 3D layer — decorative, hidden from assistive tech (the copy below is
+          the real, crawlable content). */}
+      <div style={{ position: "absolute", inset: 0 }} aria-hidden="true">
         <Canvas
           camera={{ position: [0, 0, 5], fov: 42 }}
           dpr={[1, 2]}
@@ -79,6 +80,20 @@ export default function Hero() {
           />
         </Canvas>
       </div>
+
+      {/* Refraction wash — the crystal's light spilling down into the page.
+          Color comes from the glass, not a painted surface. */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          pointerEvents: "none",
+          mixBlendMode: "screen",
+          background:
+            "radial-gradient(120% 90% at 50% 128%, rgba(108,123,214,0.22), rgba(232,161,92,0.12) 42%, transparent 68%)",
+        }}
+      />
 
       {/* Copy layer — pointerEvents none so the cursor still reaches the canvas */}
       <div
@@ -119,7 +134,18 @@ export default function Hero() {
         >
           We make things
           <br />
-          worth looking at.
+          <span
+            style={{
+              fontStyle: "italic",
+              background:
+                "linear-gradient(100deg, #6C7BD6, #F5F3EF 52%, #E8A15C)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              color: "transparent",
+            }}
+          >
+            worth looking at.
+          </span>
         </h1>
       </div>
     </section>

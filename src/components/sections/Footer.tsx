@@ -2,7 +2,7 @@ import { PlaceholderNote } from "@/components/ui/Placeholder";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-paper/10 px-6 py-14">
+    <footer className="rule-refract px-6 py-14">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 md:flex-row md:items-center md:justify-between">
         <span className="font-display text-2xl tracking-tight text-paper">
           ACE
@@ -24,7 +24,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <p className="mx-auto mt-10 max-w-6xl text-xs text-paper/30">
+      <p className="mx-auto mt-10 max-w-6xl text-xs text-paper/45">
         © {new Date().getFullYear()} ACE Creative Agency
       </p>
     </footer>

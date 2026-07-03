@@ -3,11 +3,13 @@ import { Fraunces, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/providers/SmoothScroll";
 
-// Display type — used with restraint, headlines only.
+// Display type — used with restraint, headlines only. Italic is the signature:
+// the recurring "grounded" idea is always set in Fraunces italic.
 const fraunces = Fraunces({
   variable: "--font-fraunces",
   subsets: ["latin"],
   display: "swap",
+  style: ["normal", "italic"],
 });
 
 // Body type.

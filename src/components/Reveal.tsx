@@ -20,11 +20,14 @@ export default function Reveal({
   className,
   delay = 0,
   y = 28,
+  scale = 1,
 }: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
   y?: number;
+  /** Start slightly scaled up (e.g. 1.06) for a clip-style reveal on visuals. */
+  scale?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -33,18 +36,19 @@ export default function Reveal({
     if (!el) return;
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      gsap.set(el, { opacity: 1, y: 0 });
+      gsap.set(el, { opacity: 1, y: 0, scale: 1 });
       return;
     }
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
         el,
-        { opacity: 0, y },
+        { opacity: 0, y, scale },
         {
           opacity: 1,
           y: 0,
-          duration: 1,
+          scale: 1,
+          duration: scale === 1 ? 1 : 1.3,
           delay,
           ease: "power3.out",
           scrollTrigger: {
@@ -57,7 +61,7 @@ export default function Reveal({
     }, ref);
 
     return () => ctx.revert();
-  }, [delay, y]);
+  }, [delay, y, scale]);
 
   // Start hidden so there's no flash before the reveal. Text still lives in the
   // DOM (opacity only), so it stays crawlable and accessible to screen readers.
