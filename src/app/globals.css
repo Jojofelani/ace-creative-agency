@@ -11,18 +11,6 @@
   --color-off-white: #F9F8F6;
   --color-charcoal: #1A1A1A;
   --color-soft-grey: #F4F4F4;
-  
-  --animate-fade-in: fade-in 0.5s ease-out forwards;
-  --animate-fade-up: fade-up 0.7s ease-out forwards;
-  
-  @keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
 }
 
 :root {
@@ -39,5 +27,17 @@
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading tracking-tight;
+  }
+}
+
+/* Respect users who prefer reduced motion: neutralize looping CSS animations
+   (e.g. the spinning rings) while leaving one-shot transitions intact. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
   }
 }

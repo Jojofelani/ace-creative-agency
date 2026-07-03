@@ -20,10 +20,10 @@ export function FinalCTA() {
                     className="max-w-3xl mx-auto space-y-8"
                 >
                     <h2 className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold text-white tracking-tighter">
-                        Let's Build Something <span className="text-gold">Powerful</span>
+                        Let&apos;s Build Something <span className="text-gold">Powerful</span>
                     </h2>
                     <p className="text-xl text-white/70 max-w-xl mx-auto leading-relaxed">
-                        Ready to elevate your brand? We are currently accepting new projects for Q2 2026.
+                        Ready to elevate your brand? We are currently accepting new projects for Q3 2026.
                     </p>
 
                     <div className="pt-8">

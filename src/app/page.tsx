@@ -7,13 +7,13 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 
 export default function Home() {
   return (
-    <main>
+    <>
       <Hero />
       <FeaturedWork />
       <Services />
       <About />
       <Testimonials />
       <FinalCTA />
-    </main>
+    </>
   );
 }

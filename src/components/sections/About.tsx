@@ -57,7 +57,7 @@ export function About() {
                         </h3>
                         <div className="space-y-6 text-charcoal/80 text-lg leading-relaxed">
                             <p>
-                                Ace Creative Agency was founded on a simple belief: that brands shouldn't just be seen, they should be felt. Powered by 360 Graphics, we combine decades of technical expertise with a fresh, fashion-forward design adoption.
+                                Ace Creative Agency was founded on a simple belief: that brands shouldn&apos;t just be seen, they should be felt. Powered by 360 Graphics, we combine decades of technical expertise with a fresh, fashion-forward design adoption.
                             </p>
                             <p>
                                 We work with visionaries who refuse to compromise. From global retailers like H&M to disruptive tech startups, our process is the same—uncover the truth, and tell it beautifully.

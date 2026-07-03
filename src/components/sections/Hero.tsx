@@ -1,11 +1,13 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { ArrowDown, ArrowRight } from 'lucide-react';
 import { InteractiveBackground } from '@/components/ui/InteractiveBackground';
 
 export function Hero() {
+    const prefersReducedMotion = useReducedMotion();
+
     return (
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden text-off-white pt-20">
             {/* Interactive Background */}
@@ -14,7 +16,7 @@ export function Hero() {
             {/* Abstract Animated Shape (CSS/Framer Motion) */}
             <div className="absolute right-0 top-1/4 w-[600px] h-[600px] opacity-20 pointer-events-none z-10">
                 <motion.div
-                    animate={{
+                    animate={prefersReducedMotion ? undefined : {
                         rotate: 360,
                         scale: [1, 1.1, 1],
                     }}
@@ -74,7 +76,7 @@ export function Hero() {
             >
                 <span className="text-xs uppercase tracking-widest mb-2">Scroll</span>
                 <motion.div
-                    animate={{ y: [0, 8, 0] }}
+                    animate={prefersReducedMotion ? undefined : { y: [0, 8, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                 >
                     <ArrowDown size={20} />

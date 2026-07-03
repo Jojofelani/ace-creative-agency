@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useAnimationControls } from 'framer-motion';
+import { motion, useAnimationControls, useReducedMotion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 const testimonials = [
@@ -65,14 +65,21 @@ const testimonials = [
 export function Testimonials() {
     const controls = useAnimationControls();
     const [isPaused, setIsPaused] = useState(false);
+    const prefersReducedMotion = useReducedMotion();
 
     // Duplicate testimonials for seamless loop
     const duplicatedTestimonials = [...testimonials, ...testimonials];
 
     useEffect(() => {
+        if (prefersReducedMotion) {
+            controls.stop();
+            return;
+        }
         if (!isPaused) {
             controls.start({
-                x: [0, -100 * testimonials.length + '%'],
+                // The row is one duplicated set (2x), so translating by -50%
+                // shifts exactly one full set for a seamless loop.
+                x: ['0%', '-50%'],
                 transition: {
                     duration: 90, // Slower scroll (was 60)
                     repeat: Infinity,
@@ -82,7 +89,7 @@ export function Testimonials() {
         } else {
             controls.stop();
         }
-    }, [isPaused, controls, testimonials.length]);
+    }, [isPaused, controls, prefersReducedMotion]);
 
     return (
         <section className="bg-off-white py-24 overflow-hidden" id="testimonials">
@@ -90,7 +97,7 @@ export function Testimonials() {
                 <div className="text-center space-y-2">
                     <p className="text-xs uppercase tracking-[0.2em] text-charcoal/50 font-medium">[ TESTIMONIALS ]</p>
                     <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold tracking-tight">
-                        Don't Take Our Word For It<span className="text-gold">*</span>
+                        Don&apos;t Take Our Word For It<span className="text-gold">*</span>
                     </h2>
                     <p className="text-sm text-gold uppercase tracking-widest">*TAKE THEIRS</p>
                 </div>
@@ -112,7 +119,7 @@ export function Testimonials() {
                         >
                             <div className="space-y-6">
                                 <p className="text-sm md:text-base leading-relaxed text-white/80 group-hover:text-charcoal transition-colors">
-                                    "{testimonial.quote}"
+                                    &ldquo;{testimonial.quote}&rdquo;
                                 </p>
                                 <div className="flex items-center gap-4 pt-4 border-t border-white/10 group-hover:border-charcoal/20">
                                     <div className="w-12 h-12 rounded-full bg-gold/20 group-hover:bg-charcoal/20 flex items-center justify-center text-gold group-hover:text-charcoal font-heading font-bold transition-colors">

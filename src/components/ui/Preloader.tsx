@@ -4,13 +4,22 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 export function Preloader() {
+    // Start visible on the first client render; the effect decides whether to
+    // keep the intro (first visit) or dismiss it immediately.
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // Simulate loading time or wait for resources
+        // Skip the intro for returning visitors and users who prefer reduced motion.
+        const skip =
+            !!sessionStorage.getItem('ace-intro-seen') ||
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // All state updates happen inside the timer callback (never synchronously
+        // in the effect body). A 0ms delay dismisses the intro right away for skippers.
         const timer = setTimeout(() => {
             setIsLoading(false);
-        }, 2500); // 2.5 seconds total intro
+            sessionStorage.setItem('ace-intro-seen', 'true');
+        }, skip ? 0 : 2500);
 
         return () => clearTimeout(timer);
     }, []);
