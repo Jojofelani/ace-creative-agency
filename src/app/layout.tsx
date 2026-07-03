@@ -1,9 +1,32 @@
 import type { Metadata } from "next";
+import { Fraunces, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
+import SmoothScroll from "@/providers/SmoothScroll";
+
+// Display type — used with restraint, headlines only.
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+// Body type.
+const hanken = Hanken_Grotesk({
+  variable: "--font-hanken",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "Ace Creative Agency",
-  description: "New design — work in progress.",
+  title: "ACE Creative Agency — Brand, content & design in Accra",
+  description:
+    "ACE is a creative & digital agency in Accra doing brand, content, and design that's culturally grounded, not generic.",
+  openGraph: {
+    title: "ACE Creative Agency",
+    description:
+      "Brand, content, and design that's culturally grounded, not generic.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -12,8 +35,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" className={`${fraunces.variable} ${hanken.variable}`}>
+      <body>
+        <SmoothScroll>{children}</SmoothScroll>
+      </body>
     </html>
   );
 }
