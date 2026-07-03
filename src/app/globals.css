@@ -1,43 +1,19 @@
 @import "tailwindcss";
 
-@theme {
-  --font-sans: var(--font-inter);
-  --font-heading: var(--font-outfit);
-
-  --color-gold: #D4AF37;
-  --color-gold-muted: #C5A059;
-  --color-blush: #F3E5DC;
-  --color-blush-dark: #E8D7D0;
-  --color-off-white: #F9F8F6;
-  --color-charcoal: #1A1A1A;
-  --color-soft-grey: #F4F4F4;
-}
-
 :root {
-  --background: var(--color-off-white);
-  --foreground: var(--color-charcoal);
+  --background: #ffffff;
+  --foreground: #171717;
 }
 
-@layer base {
-  body {
-    background-color: var(--background);
-    color: var(--foreground);
-    @apply font-sans antialiased;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-heading tracking-tight;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
   }
 }
 
-/* Respect users who prefer reduced motion: neutralize looping CSS animations
-   (e.g. the spinning rings) while leaving one-shot transitions intact. */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-  }
+body {
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
 }

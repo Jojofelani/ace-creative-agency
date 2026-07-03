@@ -1,19 +1,9 @@
-import { Hero } from "@/components/sections/Hero";
-import { FeaturedWork } from "@/components/sections/FeaturedWork";
-import { Services } from "@/components/sections/Services";
-import { About } from "@/components/sections/About";
-import { Testimonials } from "@/components/sections/Testimonials";
-import { FinalCTA } from "@/components/sections/FinalCTA";
-
 export default function Home() {
   return (
-    <>
-      <Hero />
-      <FeaturedWork />
-      <Services />
-      <About />
-      <Testimonials />
-      <FinalCTA />
-    </>
+    <main className="min-h-screen flex items-center justify-center">
+      <p className="text-sm text-neutral-500">
+        Blank canvas — new design starts here.
+      </p>
+    </main>
   );
 }
