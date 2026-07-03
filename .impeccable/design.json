@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-03T00:00:00.000Z",
+  "title": "Design System: ACE Creative Agency",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "primary",
+        "displayName": "Ink",
+        "canonical": "oklch(0.13 0.012 285)",
+        "tonalRamp": ["oklch(0.13 0.012 285)", "oklch(0.20 0.012 285)", "oklch(0.28 0.012 285)", "oklch(0.38 0.010 285)", "oklch(0.50 0.010 285)", "oklch(0.66 0.008 285)", "oklch(0.82 0.006 285)", "oklch(0.95 0.004 285)"]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "oklch(0.96 0.006 90)",
+        "tonalRamp": ["oklch(0.20 0.006 90)", "oklch(0.32 0.006 90)", "oklch(0.45 0.006 90)", "oklch(0.58 0.006 90)", "oklch(0.70 0.006 90)", "oklch(0.82 0.006 90)", "oklch(0.90 0.006 90)", "oklch(0.96 0.006 90)"]
+      },
+      "gold": {
+        "role": "tertiary",
+        "displayName": "Ghana Gold",
+        "canonical": "oklch(0.72 0.11 85)",
+        "tonalRamp": ["oklch(0.30 0.05 85)", "oklch(0.40 0.07 85)", "oklch(0.50 0.09 85)", "oklch(0.60 0.10 85)", "oklch(0.72 0.11 85)", "oklch(0.82 0.09 85)", "oklch(0.90 0.06 85)", "oklch(0.96 0.03 85)"]
+      },
+      "refract-warm": {
+        "role": "secondary",
+        "displayName": "Warm Refraction",
+        "canonical": "oklch(0.76 0.12 65)",
+        "tonalRamp": ["oklch(0.34 0.06 65)", "oklch(0.45 0.08 65)", "oklch(0.56 0.10 65)", "oklch(0.66 0.11 65)", "oklch(0.76 0.12 65)", "oklch(0.85 0.09 65)", "oklch(0.92 0.06 65)", "oklch(0.97 0.03 65)"]
+      },
+      "refract-cool": {
+        "role": "secondary",
+        "displayName": "Cool Refraction",
+        "canonical": "oklch(0.60 0.13 275)",
+        "tonalRamp": ["oklch(0.28 0.07 275)", "oklch(0.38 0.09 275)", "oklch(0.48 0.11 275)", "oklch(0.60 0.13 275)", "oklch(0.70 0.11 275)", "oklch(0.80 0.08 275)", "oklch(0.89 0.05 275)", "oklch(0.96 0.02 275)"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The hero line only. Fraunces at max scale, sentence case." },
+      "headline": { "displayName": "Headline", "purpose": "Section headings. Fraunces light (300) at large scale so they read as set." },
+      "body": { "displayName": "Body", "purpose": "All reading. Hanken Grotesk at 70% paper opacity, 65-75ch measure." },
+      "label": { "displayName": "Label", "purpose": "Rationed eyebrow and case-study tags. Uppercase, wide tracking, sparing." },
+      "accent": { "displayName": "Accent", "purpose": "The recurring grounded idea. Fraunces italic, solid warm refraction." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-reveal", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Scroll-reveal enters (GSAP power3.out equivalent). Ease-out, never bounce." },
+      { "name": "ease-ui", "value": "cubic-bezier(0.32, 0.72, 0, 1)", "purpose": "Hover and state transitions on nav, buttons, links." },
+      { "name": "lenis-scroll", "value": "custom: 1.001 - 2^(-10t)", "purpose": "Lenis momentum easing for the whole-page smooth scroll." },
+      { "name": "crystal-damp", "value": "THREE.MathUtils.damp, lambda 3", "purpose": "Cursor-follow damping on the crystal. Never snaps." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Hero Primary CTA",
+      "kind": "button",
+      "refersTo": "hero-cta-primary",
+      "description": "The one clearly-clickable object in the hero. Paper fill, ink text, full pill.",
+      "html": "<a class=\"ds-cta-primary\" href=\"#contact\">Start a project</a>",
+      "css": ".ds-cta-primary { display: inline-block; background: #F5F3EF; color: #0B0B0F; border-radius: 9999px; padding: 0.75rem 1.5rem; font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; text-decoration: none; transition: background 0.3s cubic-bezier(0.32,0.72,0,1); } .ds-cta-primary:hover { background: #FFFFFF; } .ds-cta-primary:focus-visible { outline: 2px solid #C9A24B; outline-offset: 3px; }"
+    },
+    {
+      "name": "Nav CTA",
+      "kind": "button",
+      "refersTo": "nav-cta",
+      "description": "Ghost pill in the nav that inverts to a paper fill on hover. Single contact-intent label.",
+      "html": "<a class=\"ds-nav-cta\" href=\"#contact\">Start a project</a>",
+      "css": ".ds-nav-cta { display: inline-block; background: transparent; color: #F5F3EF; border: 1px solid rgba(245,243,239,0.25); border-radius: 9999px; padding: 0.5rem 1rem; font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.875rem; text-decoration: none; transition: background 0.3s cubic-bezier(0.32,0.72,0,1), color 0.3s, border-color 0.3s; } .ds-nav-cta:hover { background: #F5F3EF; color: #0B0B0F; border-color: #F5F3EF; } .ds-nav-cta:focus-visible { outline: 2px solid #C9A24B; outline-offset: 3px; }"
+    },
+    {
+      "name": "Underline Link",
+      "kind": "custom",
+      "refersTo": "link-underline",
+      "description": "Secondary action / contact link. Paper text, gold-tinted underline that fills to gold on hover.",
+      "html": "<a class=\"ds-link\" href=\"#work\">See the work</a>",
+      "css": ".ds-link { color: #F5F3EF; font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.875rem; text-decoration: underline; text-decoration-color: rgba(201,162,75,0.5); text-underline-offset: 8px; transition: text-decoration-color 0.3s cubic-bezier(0.32,0.72,0,1); } .ds-link:hover { text-decoration-color: #C9A24B; } .ds-link:focus-visible { outline: 2px solid #C9A24B; outline-offset: 3px; }"
+    },
+    {
+      "name": "Italic Accent",
+      "kind": "custom",
+      "refersTo": "accent",
+      "description": "The recurring grounded through-line. Fraunces italic, solid warm refraction. No gradient.",
+      "html": "<p class=\"ds-accent-line\">The kind of work that could only come from <em class=\"ds-accent\">here</em>.</p>",
+      "css": ".ds-accent-line { color: #F5F3EF; font-family: 'Fraunces', Georgia, serif; font-weight: 300; font-size: 2rem; line-height: 1.15; letter-spacing: -0.02em; } .ds-accent { font-style: italic; font-weight: 400; line-height: 1.1; color: #E8A15C; }"
+    },
+    {
+      "name": "Refraction Divider",
+      "kind": "custom",
+      "refersTo": "rule-refract",
+      "description": "The signature section divider: a 1px cool-to-warm refraction hairline. Replaces every grey rule.",
+      "html": "<div class=\"ds-rule\"></div>",
+      "css": ".ds-rule { position: relative; height: 1px; width: 100%; background: linear-gradient(90deg, transparent 0%, color-mix(in oklab, #6C7BD6 55%, transparent) 28%, color-mix(in oklab, #F5F3EF 30%, transparent) 50%, color-mix(in oklab, #E8A15C 55%, transparent) 72%, transparent 100%); }"
+    },
+    {
+      "name": "Case-study Visual Slot",
+      "kind": "card",
+      "description": "Placeholder frame for real case-study imagery. Thin border, faint cool-to-warm inner wash. Not a decorative card.",
+      "html": "<div class=\"ds-visual\"><span>Psalm 23 campaign visuals</span></div>",
+      "css": ".ds-visual { position: relative; display: flex; align-items: center; justify-content: center; aspect-ratio: 3 / 2; border: 1px solid rgba(245,243,239,0.1); border-radius: 2px; overflow: hidden; } .ds-visual::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(108,123,214,0.1), transparent, rgba(232,161,92,0.1)); } .ds-visual span { position: relative; font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(245,243,239,0.3); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Light Through Glass",
+    "overview": "The whole system is refraction. Colour never arrives as a painted surface; it arrives as bent light passing through glass. A hand-coded crystal idles in the hero, spilling warm and cool light down into a deep, quiet page, and that same light logic recurs everywhere: dividers are a cool-to-warm spectrum hairline, Work carries a cool glow, Contact warms toward the end of the spectrum. The room is grounded and warm, never clinical. This system spends its boldness exactly once: the crystal is the single loud element and earns a whole viewport; everything below stays disciplined, dark, and typographic so the work stays the picture and the 3D stays the frame.",
+    "keyCharacteristics": [
+      "Colour is refraction, never paint. Ink and paper carry 95% of every surface.",
+      "One bold moment (the crystal); everything else is quiet.",
+      "Fraunces used sparingly for display; Hanken Grotesk carries all reading.",
+      "Flat by default: depth is light and tonal wash, never a drop shadow.",
+      "Everything eases. No linear motion, no snapping, anywhere."
+    ],
+    "rules": [
+      { "name": "The Bent-Light Rule", "body": "Colour enters only as refraction: the crystal's spill, the cool-to-warm divider, the section washes. No flat colour fills on surfaces.", "section": "colors" },
+      { "name": "The One-Gold Rule", "body": "Gold is a mark, never a field. Links, focus ring, at most one accented CTA. Never a heading or panel fill.", "section": "colors" },
+      { "name": "The One-Gradient Rule", "body": "Exactly one gradient exists on the page: the hero accent line. Everywhere else the accent is solid warm. Gradient text is otherwise prohibited.", "section": "typography" },
+      { "name": "The Italic Through-Line Rule", "body": "The one idea the page is about is always Fraunces italic, same family and treatment every time, so the eye learns it.", "section": "typography" },
+      { "name": "The No-Shadow Rule", "body": "Surfaces never lift on a drop shadow. Depth is light (a wash) or space, never elevation.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do treat every colour as refraction; ink and paper own 95% of every surface.",
+      "Do ease everything (power-out curves, Lenis momentum).",
+      "Do keep Ghana Gold to small marks only: links, focus ring, one CTA.",
+      "Do set the recurring grounded idea in Fraunces italic, solid warm.",
+      "Do ship real ACE work or a credible canvas/WebGL scene in the visual slots.",
+      "Do hide the decorative canvas from assistive tech and keep real text and meta/OG in the DOM.",
+      "Do ship a lighter or still crystal on mobile / low-power devices, and honor prefers-reduced-motion."
+    ],
+    "donts": [
+      "Don't build the generic dark-SaaS agency template: near-black + one accent + three identical feature cards + a tiny uppercase eyebrow over every section.",
+      "Don't use corporate stock photography or drop a colored block where a real case-study image belongs.",
+      "Don't drift into cold Swiss / grid minimalism, austere and emotionally flat.",
+      "Don't add any box-shadow. Depth is light, never elevation.",
+      "Don't paint a surface with colour, or fill a heading with gold.",
+      "Don't use gradient text anywhere except the single hero accent line.",
+      "Don't snap or use linear motion, and don't let the crystal bury the work."
+    ]
+  }
+}
