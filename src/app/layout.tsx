@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fraunces, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/providers/SmoothScroll";
+import Nav from "@/components/Nav";
 
 // Display type — used with restraint, headlines only. Italic is the signature:
 // the recurring "grounded" idea is always set in Fraunces italic.
@@ -20,7 +21,7 @@ const hanken = Hanken_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "ACE Creative Agency — Brand, content & design in Accra",
+  title: "ACE Creative Agency. Brand, content and design in Accra",
   description:
     "ACE is a creative & digital agency in Accra doing brand, content, and design that's culturally grounded, not generic.",
   openGraph: {
@@ -39,6 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fraunces.variable} ${hanken.variable}`}>
       <body>
+        <Nav />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

@@ -6,7 +6,7 @@
 export function PlaceholderNote({ children }: { children: React.ReactNode }) {
   return (
     <span className="mt-4 inline-block rounded-full border border-gold/40 px-3 py-1 text-[0.65rem] uppercase tracking-[0.18em] text-gold/80">
-      Placeholder — {children}
+      Placeholder: {children}
     </span>
   );
 }

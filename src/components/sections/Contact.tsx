@@ -34,7 +34,7 @@ export default function Contact() {
                 hello@ace.example
               </a>
               <p className="text-sm text-paper/45">
-                Email · WhatsApp · Instagram
+                Email, WhatsApp, Instagram
               </p>
             </div>
             <PlaceholderNote>

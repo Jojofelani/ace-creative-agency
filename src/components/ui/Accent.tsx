@@ -1,8 +1,8 @@
 /**
- * The signature type move. The one recurring idea the page is about —
- * being grounded, being felt — is always set in Fraunces italic and tinted
- * with the crystal's refraction (cool → warm). It's the through-line the eye
- * learns from the hero down to the contact line.
+ * The signature type move. The one recurring idea the page is about (being
+ * grounded, being felt) is always set in Fraunces italic, in a single warm
+ * refraction tone. Same-family italic emphasis, not gradient text. The one
+ * gradient moment on the page is the hero line; everything else stays solid.
  */
 export function Accent({
   children,
@@ -12,9 +12,7 @@ export function Accent({
   className?: string;
 }) {
   return (
-    <em
-      className={`bg-gradient-to-r from-refract-cool via-paper to-refract-warm bg-clip-text font-display italic text-transparent ${className}`}
-    >
+    <em className={`font-display italic leading-[1.1] text-refract-warm ${className}`}>
       {children}
     </em>
   );

@@ -23,17 +23,17 @@ type Feature = {
 const features: Feature[] = [
   {
     title: "Psalm 23 Shopping Center",
-    tag: "Campaign · Content · Ecommerce",
-    body: "A culturally grounded Nestlé campaign built on real Ghanaian memory — Milo, Cerelac, Lactogen; the tastes people grew up on. The emotional 'Grew Up On It' story sits on top, while underneath a Mobile Money ecommerce flow turns that feeling into wholesale conversion.",
-    visualLabel: "Psalm 23 — campaign visuals",
-    note: "confirm 2–3 sentence write-up + real campaign visuals",
+    tag: "Campaign, Content, Ecommerce",
+    body: "A culturally grounded Nestlé campaign built on real Ghanaian memory: Milo, Cerelac, Lactogen, the tastes people grew up on. The emotional 'Grew Up On It' story sits on top, while underneath a Mobile Money ecommerce flow turns that feeling into wholesale conversion.",
+    visualLabel: "Psalm 23 campaign visuals",
+    note: "confirm 2-3 sentence write-up + real campaign visuals",
   },
   {
     title: "VivaLoKs",
-    tag: "Brand · Content · Social",
-    body: "A premium interlocking loc system. We built the content strategy and an installation spotlight series that positioned VivaLoKs as aspirational — a considered choice, not a commodity.",
-    visualLabel: "VivaLoKs — installation visuals",
-    note: "confirm 2–3 sentence write-up + real install visuals",
+    tag: "Brand, Content, Social",
+    body: "A premium interlocking loc system. We built the content strategy and an installation spotlight series that positioned VivaLoKs as aspirational, a considered choice, not a commodity.",
+    visualLabel: "VivaLoKs installation visuals",
+    note: "confirm 2-3 sentence write-up + real install visuals",
   },
 ];
 

@@ -9,7 +9,7 @@ import { PlaceholderNote } from "@/components/ui/Placeholder";
 const services = [
   {
     title: "Brand & identity",
-    body: "The core idea, and the system that carries it — name, mark, voice, the way it all holds together.",
+    body: "The core idea, and the system that carries it: name, mark, voice, the way it all holds together.",
   },
   {
     title: "Content & social",
@@ -17,11 +17,11 @@ const services = [
   },
   {
     title: "Design",
-    body: "Considered design across everything you put out — from a single post to a full campaign.",
+    body: "Considered design across everything you put out, from a single post to a full campaign.",
   },
   {
     title: "Photography & video",
-    body: "We shoot it ourselves. Real people, real places — made to feel like here, not a stock library.",
+    body: "We shoot it ourselves. Real people, real places, made to feel like here, not a stock library.",
   },
   {
     title: "Copywriting & strategy",

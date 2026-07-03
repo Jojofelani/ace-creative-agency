@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Environment, AdaptiveDpr } from "@react-three/drei";
+import { Environment, Lightformer, AdaptiveDpr } from "@react-three/drei";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import GlassCrystal from "./GlassCrystal";
@@ -46,10 +46,11 @@ export default function Hero() {
 
   return (
     <section
+      id="top"
       ref={sectionRef}
       style={{
         position: "relative",
-        height: "100svh",
+        minHeight: "100svh",
         width: "100%",
         background: "#0B0B0F",
         overflow: "hidden",
@@ -64,15 +65,41 @@ export default function Hero() {
           gl={{ antialias: true, alpha: true }}
         >
           <AdaptiveDpr pixelated />
-          <ambientLight intensity={0.4} />
-          <directionalLight position={[5, 5, 5]} intensity={1.2} />
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[5, 5, 5]} intensity={1.4} />
 
           {/*
             The refraction color comes from the environment, not the material.
-            "studio" is a safe built-in. Swap for an .hdr from Poly Haven, or
-            build a gradient env to push the warm/cool ACE refraction palette.
+            Custom light sources in the ACE palette: warm on one side, cool on
+            the other, bright paper rims. This is what makes the glass read as
+            luminous instead of refracting the dark page into black.
           */}
-          <Environment preset="studio" background={false} />
+          <Environment resolution={256} background={false}>
+            <Lightformer
+              intensity={2.6}
+              color="#E8A15C"
+              position={[-4, 1, 3]}
+              scale={[7, 7, 1]}
+            />
+            <Lightformer
+              intensity={2.6}
+              color="#6C7BD6"
+              position={[4, -1, 3]}
+              scale={[7, 7, 1]}
+            />
+            <Lightformer
+              intensity={2.2}
+              color="#F5F3EF"
+              position={[0, 4, -3]}
+              scale={[12, 4, 1]}
+            />
+            <Lightformer
+              intensity={1.3}
+              color="#F5F3EF"
+              position={[0, -4, 2]}
+              scale={[10, 3, 1]}
+            />
+          </Environment>
 
           <GlassCrystal
             scrollProgress={scrollProgress}
@@ -100,7 +127,7 @@ export default function Hero() {
         style={{
           position: "relative",
           zIndex: 1,
-          height: "100%",
+          minHeight: "100svh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -147,6 +174,25 @@ export default function Hero() {
             worth looking at.
           </span>
         </h1>
+
+        {/* CTAs — pointerEvents re-enabled so they stay clickable over the canvas */}
+        <div
+          style={{ pointerEvents: "auto", marginTop: "2.5rem" }}
+          className="flex flex-wrap items-center gap-5"
+        >
+          <a
+            href="#contact"
+            className="rounded-full bg-paper px-6 py-3 text-sm font-medium text-ink transition-colors hover:bg-white"
+          >
+            Start a project
+          </a>
+          <a
+            href="#work"
+            className="text-sm text-paper/80 underline decoration-paper/30 underline-offset-8 transition-colors hover:text-paper hover:decoration-paper"
+          >
+            See the work
+          </a>
+        </div>
       </div>
     </section>
   );
