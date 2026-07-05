@@ -33,37 +33,37 @@ export default function GlassCrystal({
       return;
     }
 
-    const { pointer, clock } = state;
-
-    // 1. Idle base rotation — slow, continuous.
-    const baseY = clock.elapsedTime * 0.15;
-
-    // 3. Scroll adds rotation + a downward drift as you scroll the hero.
+    // Clamp the frame delta. When the render loop is paused off-screen and later
+    // resumes, the first delta can be huge — clamping keeps every step small so
+    // there's no catch-up spin or jump on resume.
+    const dt = Math.min(delta, 0.05);
+    const { pointer } = state;
     const p = scrollProgress.current;
-    const scrollY = p * Math.PI * 0.9;
-    const driftY = -p * 1.4;
 
-    // 2. Cursor tilt — target derived from pointer, then DAMPED toward it.
-    const targetX = pointer.y * 0.35;
-    const targetY = baseY + scrollY + pointer.x * 0.5;
+    // 1. Idle spin — ACCUMULATED per frame (not derived from absolute clock
+    //    time), so pausing the loop never leaves a far-ahead target to race to.
+    mesh.current.rotation.y += dt * 0.15;
 
+    // 2. Cursor tilt — damped offset on X (and a subtle roll on Z).
     mesh.current.rotation.x = THREE.MathUtils.damp(
       mesh.current.rotation.x,
-      targetX,
+      pointer.y * 0.3,
       3,
-      delta
+      dt
     );
-    mesh.current.rotation.y = THREE.MathUtils.damp(
-      mesh.current.rotation.y,
-      targetY,
+    mesh.current.rotation.z = THREE.MathUtils.damp(
+      mesh.current.rotation.z,
+      pointer.x * 0.12,
       3,
-      delta
+      dt
     );
+
+    // 3. Scroll drift (p is 0 for the standalone Contact accent).
     mesh.current.position.y = THREE.MathUtils.damp(
       mesh.current.position.y,
-      driftY,
+      -p * 1.4,
       3,
-      delta
+      dt
     );
   });
 

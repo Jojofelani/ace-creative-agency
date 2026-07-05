@@ -77,13 +77,17 @@ export default function AceType3D({
 
     const t = intro.current; // 0..1 push-in
 
+    // Clamp the frame delta so a paused/resumed render loop (when the hero
+    // scrolls off-screen) can't produce a huge catch-up step.
+    const dt = Math.min(delta, 0.05);
+
     // 2. Cursor tilt — damped, and eased out as the portal takes over.
     const { pointer } = state;
     const cursorAmt = (1 - p) * 0.9;
     const targetX = pointer.y * 0.16 * cursorAmt;
     const targetY = pointer.x * 0.26 * cursorAmt;
-    g.rotation.x = THREE.MathUtils.damp(g.rotation.x, targetX, 3, delta);
-    g.rotation.y = THREE.MathUtils.damp(g.rotation.y, targetY, 3, delta);
+    g.rotation.x = THREE.MathUtils.damp(g.rotation.x, targetX, 3, dt);
+    g.rotation.y = THREE.MathUtils.damp(g.rotation.y, targetY, 3, dt);
 
     // Load push-in assembles scale from 0.82 -> 1.
     const introScale = THREE.MathUtils.lerp(0.82, 1, t);
@@ -92,12 +96,7 @@ export default function AceType3D({
     // 1+3. Camera: far -> rest (load), then rest -> portal (scroll).
     const preZ = THREE.MathUtils.lerp(FAR_Z, REST_Z, t);
     const targetZ = THREE.MathUtils.lerp(preZ, PORTAL_Z, p);
-    camera.position.z = THREE.MathUtils.damp(
-      camera.position.z,
-      targetZ,
-      6,
-      delta
-    );
+    camera.position.z = THREE.MathUtils.damp(camera.position.z, targetZ, 6, dt);
   });
 
   return (
