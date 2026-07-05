@@ -29,7 +29,7 @@ export default function Nav() {
           </a>
           <a
             href="#contact"
-            className="rounded-full border border-paper/25 px-4 py-2 text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
+            className="press rounded-full border border-paper/25 px-4 py-2 text-paper hover:border-paper hover:bg-paper hover:text-ink"
           >
             Start a project
           </a>

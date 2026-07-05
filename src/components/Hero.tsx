@@ -1,48 +1,111 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Canvas } from "@react-three/fiber";
-import { Environment, Lightformer, AdaptiveDpr } from "@react-three/drei";
+import dynamic from "next/dynamic";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import GlassCrystal from "./GlassCrystal";
+import AceFallback from "./hero/AceFallback";
+import Preloader from "./hero/Preloader";
+import { canRun3D } from "@/lib/canRun3D";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+// Code-split: three / drei live in this chunk, never in the main bundle. The
+// fallback stands in while the chunk loads (and forever on low-power devices).
+const CrystalScene = dynamic(() => import("./hero/CrystalScene"), {
+  ssr: false,
+  loading: () => <AceFallback />,
+});
+
 export default function Hero() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  // Scroll progress lives in a ref so scroll never triggers a React re-render.
+  const washRef = useRef<HTMLDivElement>(null);
+  const copyRef = useRef<HTMLDivElement>(null);
+  const crystalRef = useRef<HTMLDivElement>(null);
+  // Scroll + intro progress live in refs so neither triggers a React re-render.
   const scrollProgress = useRef(0);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const intro = useRef(0);
+  const [render3D, setRender3D] = useState(false);
+  // Copy is revealed after the push-in settles (or immediately on the fallback).
+  const [copyIn, setCopyIn] = useState(false);
 
+  // Capability decision (re-evaluated if the reduced-motion preference changes).
   useEffect(() => {
+    const decide = () => setRender3D(canRun3D());
+    decide();
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mq.matches);
-
-    const onChange = () => setReducedMotion(mq.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
+    mq.addEventListener("change", decide);
+    return () => mq.removeEventListener("change", decide);
   }, []);
 
+  // On the 2D fallback there's no preloader/zoom — show the copy right away.
   useEffect(() => {
-    if (reducedMotion || !sectionRef.current) return;
+    if (!render3D) setCopyIn(true);
+  }, [render3D]);
+
+  // Scroll drives the crystal + portal wash only when the scene is running.
+  useEffect(() => {
+    if (!render3D || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
+      // Pin the hero so the ACE finishes zooming into the portal *before* the
+      // page moves on. scrub makes it fully reversible scrubbing up and down.
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: "top top",
-        end: "bottom top",
+        end: "+=150%",
         scrub: true,
+        pin: true,
+        anticipatePin: 1,
+        // Refresh this pin BEFORE the section triggers below it, so its spacer
+        // is in place when they measure their start/end — otherwise every later
+        // scrub (the Intro zoom especially) is calculated ~1400px too early.
+        refreshPriority: 1,
         onUpdate: (self) => {
-          scrollProgress.current = self.progress;
+          const p = self.progress;
+          scrollProgress.current = p;
+          // Ramp the refraction wash as the letters bloom into the portal.
+          if (washRef.current) {
+            washRef.current.style.opacity = String(0.22 + p * 0.7);
+            washRef.current.style.transform = `scale(${1 + p * 0.4})`;
+          }
+          // Copy lifts + fades out as the portal takes over.
+          if (copyRef.current) {
+            copyRef.current.style.opacity = String(Math.max(0, 1 - p * 1.7));
+            copyRef.current.style.transform = `translateY(${-p * 42}px)`;
+          }
+          // Near the end, dissolve the letters into the wash so the next
+          // section resolves out of the bloom instead of hard-cutting.
+          if (crystalRef.current) {
+            const fade = p < 0.8 ? 1 : 1 - (p - 0.8) / 0.2;
+            crystalRef.current.style.opacity = String(Math.max(0.12, fade));
+          }
         },
       });
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [reducedMotion]);
+  }, [render3D]);
+
+  // Preloader hands off here: ease `intro` 0 -> 1 (the push-in) and stagger the copy.
+  const handleReady = () => {
+    gsap.to(intro, {
+      current: 1,
+      duration: 1.6,
+      ease: "expo.out",
+      onStart: () => {
+        gsap.delayedCall(0.5, () => setCopyIn(true));
+      },
+    });
+  };
+
+  const reveal = (delay: number, to = 1) => ({
+    opacity: copyIn ? to : 0,
+    transform: copyIn ? "translateY(0)" : "translateY(18px)",
+    transition: `opacity 900ms ${delay}s var(--ease-out-quint), transform 900ms ${delay}s var(--ease-out-quint)`,
+  });
 
   return (
     <section
@@ -56,82 +119,45 @@ export default function Hero() {
         overflow: "hidden",
       }}
     >
-      {/* 3D layer — decorative, hidden from assistive tech (the copy below is
-          the real, crawlable content). */}
-      <div style={{ position: "absolute", inset: 0 }} aria-hidden="true">
-        <Canvas
-          camera={{ position: [0, 0, 5], fov: 42 }}
-          dpr={[1, 2]}
-          gl={{ antialias: true, alpha: true }}
-        >
-          <AdaptiveDpr pixelated />
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[5, 5, 5]} intensity={1.4} />
-
-          {/*
-            The refraction color comes from the environment, not the material.
-            Custom light sources in the ACE palette: warm on one side, cool on
-            the other, bright paper rims. This is what makes the glass read as
-            luminous instead of refracting the dark page into black.
-          */}
-          <Environment resolution={256} background={false}>
-            <Lightformer
-              intensity={2.6}
-              color="#E8A15C"
-              position={[-4, 1, 3]}
-              scale={[7, 7, 1]}
-            />
-            <Lightformer
-              intensity={2.6}
-              color="#6C7BD6"
-              position={[4, -1, 3]}
-              scale={[7, 7, 1]}
-            />
-            <Lightformer
-              intensity={2.2}
-              color="#F5F3EF"
-              position={[0, 4, -3]}
-              scale={[12, 4, 1]}
-            />
-            <Lightformer
-              intensity={1.3}
-              color="#F5F3EF"
-              position={[0, -4, 2]}
-              scale={[10, 3, 1]}
-            />
-          </Environment>
-
-          <GlassCrystal
-            scrollProgress={scrollProgress}
-            reducedMotion={reducedMotion}
-          />
-        </Canvas>
+      {/* Crystal layer — decorative, hidden from assistive tech. WebGL on capable
+          devices; a static "ACE" wordmark everywhere else. */}
+      <div ref={crystalRef} style={{ position: "absolute", inset: 0 }} aria-hidden="true">
+        {render3D ? (
+          <CrystalScene scrollProgress={scrollProgress} intro={intro} />
+        ) : (
+          <AceFallback />
+        )}
       </div>
 
-      {/* Refraction wash — the crystal's light spilling down into the page.
-          Color comes from the glass, not a painted surface. */}
+      {/* Refraction wash — the letters' light spilling down, blooming on scroll. */}
       <div
+        ref={washRef}
         aria-hidden="true"
         style={{
           position: "absolute",
           inset: 0,
           pointerEvents: "none",
           mixBlendMode: "screen",
+          opacity: 0.22,
           background:
-            "radial-gradient(120% 90% at 50% 128%, rgba(108,123,214,0.22), rgba(232,161,92,0.12) 42%, transparent 68%)",
+            "radial-gradient(120% 90% at 50% 118%, rgba(108,123,214,0.28), rgba(232,161,92,0.16) 42%, transparent 68%)",
         }}
       />
 
+      {render3D && <Preloader onDone={handleReady} />}
+
       {/* Copy layer — pointerEvents none so the cursor still reaches the canvas */}
       <div
+        ref={copyRef}
         style={{
           position: "relative",
           zIndex: 1,
           minHeight: "100svh",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          padding: "0 clamp(1.5rem, 6vw, 6rem)",
+          justifyContent: "flex-end",
+          paddingBottom: "clamp(3rem, 12vh, 9rem)",
+          paddingInline: "clamp(1.5rem, 6vw, 6rem)",
           pointerEvents: "none",
           color: "#F5F3EF",
         }}
@@ -142,47 +168,62 @@ export default function Hero() {
             fontSize: "0.85rem",
             letterSpacing: "0.22em",
             textTransform: "uppercase",
-            opacity: 0.6,
             margin: 0,
+            ...reveal(0, 0.6),
           }}
         >
-          ACE Creative Agency
+          Powered by 360 Graphics
         </p>
         <h1
           style={{
             fontFamily: "var(--font-display), Georgia, serif",
-            fontSize: "clamp(2.75rem, 8vw, 6.5rem)",
+            fontSize: "clamp(2.25rem, 5.5vw, 4.5rem)",
             fontWeight: 400,
-            lineHeight: 0.98,
+            lineHeight: 1.0,
             letterSpacing: "-0.02em",
             margin: "0.4em 0 0",
-            maxWidth: "14ch",
+            maxWidth: "18ch",
+            textWrap: "balance",
+            ...reveal(0.08),
           }}
         >
-          We make things
-          <br />
+          Moving brands{" "}
           <span
             style={{
               fontStyle: "italic",
-              background:
-                "linear-gradient(100deg, #6C7BD6, #F5F3EF 52%, #E8A15C)",
+              background: "linear-gradient(100deg, #6C7BD6, #F5F3EF 52%, #E8A15C)",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
               color: "transparent",
             }}
           >
-            worth looking at.
+            forward.
           </span>
         </h1>
 
+        <p
+          style={{
+            fontFamily: "var(--font-body), system-ui, sans-serif",
+            fontSize: "clamp(1rem, 1.4vw, 1.15rem)",
+            lineHeight: 1.55,
+            color: "rgba(245,243,239,0.72)",
+            maxWidth: "42ch",
+            margin: "1.4rem 0 0",
+            ...reveal(0.16),
+          }}
+        >
+          We are Ace — a strategy-driven creative studio building bold digital
+          experiences for global brands and ambitious startups.
+        </p>
+
         {/* CTAs — pointerEvents re-enabled so they stay clickable over the canvas */}
         <div
-          style={{ pointerEvents: "auto", marginTop: "2.5rem" }}
+          style={{ pointerEvents: "auto", marginTop: "2rem", ...reveal(0.24) }}
           className="flex flex-wrap items-center gap-5"
         >
           <a
             href="#contact"
-            className="rounded-full bg-paper px-6 py-3 text-sm font-medium text-ink transition-colors hover:bg-white"
+            className="press rounded-full bg-paper px-6 py-3 text-sm font-medium text-ink hover:bg-white"
           >
             Start a project
           </a>
@@ -190,7 +231,7 @@ export default function Hero() {
             href="#work"
             className="text-sm text-paper/80 underline decoration-paper/30 underline-offset-8 transition-colors hover:text-paper hover:decoration-paper"
           >
-            See the work
+            View our work
           </a>
         </div>
       </div>

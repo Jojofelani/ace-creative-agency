@@ -1,31 +1,39 @@
 import Reveal from "@/components/Reveal";
+import DrawLine from "@/components/scroll/DrawLine";
+import { Accent } from "@/components/ui/Accent";
 import { PlaceholderNote } from "@/components/ui/Placeholder";
 
 /**
- * What we do. Plain-language, in ACE's voice — short declarative lines, no
- * agency-speak. Kept quiet: a disciplined list, not a feature grid shouting.
+ * Our expertise. A disciplined list, not a feature grid shouting. Descriptions
+ * for the first three come from the master content; the last two are structure
+ * awaiting real copy.
  */
 
 const services = [
   {
-    title: "Brand & identity",
-    body: "The core idea, and the system that carries it: name, mark, voice, the way it all holds together.",
+    title: "Branding & Identity",
+    body: "We craft distinct visual identities that tell compelling stories and resonate with your audience.",
+    todo: false,
   },
   {
-    title: "Content & social",
-    body: "Work made for the feed and the culture around it. Made to be watched, saved, and passed on.",
+    title: "Web Design & Dev",
+    body: "Immersive, high-performance websites built on modern tech stacks like Next.js.",
+    todo: false,
   },
   {
-    title: "Design",
-    body: "Considered design across everything you put out, from a single post to a full campaign.",
+    title: "Social Media",
+    body: "Strategic content and management to grow your community and engage customers.",
+    todo: false,
   },
   {
-    title: "Photography & video",
-    body: "We shoot it ourselves. Real people, real places, made to feel like here, not a stock library.",
+    title: "Motion & Digital",
+    body: "Motion design and digital work that brings the brand to life across every screen.",
+    todo: true,
   },
   {
-    title: "Copywriting & strategy",
-    body: "The thinking underneath and the words on top. What to say, and how to say it so it lands.",
+    title: "Creative Strategy",
+    body: "The thinking underneath: positioning, messaging, and the plan that ties it all together.",
+    todo: true,
   },
 ];
 
@@ -35,24 +43,39 @@ export default function Services() {
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <p className="mb-4 text-xs uppercase tracking-[0.22em] text-paper/45">
-            What we do
+            Our expertise
           </p>
           <h2 className="max-w-2xl font-display text-4xl font-light leading-[1.05] tracking-tight text-paper md:text-5xl">
-            We make the thing, not just the deck.
+            Bridging the gap between <Accent>strategy</Accent> and{" "}
+            <Accent>art</Accent>.
           </h2>
-          <PlaceholderNote>confirm exact service groups</PlaceholderNote>
         </Reveal>
 
         <div className="mt-16 md:mt-24">
           {services.map((service, i) => (
-            <Reveal key={service.title} delay={i * 0.04}>
-              <div className="grid gap-4 border-t border-paper/10 py-8 md:grid-cols-[0.8fr_1.2fr] md:gap-12 md:py-10">
-                <h3 className="font-display text-2xl font-normal text-paper md:text-3xl">
-                  {service.title}
-                </h3>
-                <p className="max-w-prose text-base leading-relaxed text-paper/60">
-                  {service.body}
-                </p>
+            <Reveal key={service.title} delay={i * 0.04} parallax={4}>
+              <div className="relative py-8 md:py-10">
+                {/* Divider draws across as a cool→warm refraction beam */}
+                <DrawLine
+                  className="absolute inset-x-0 top-0 h-px"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, rgba(108,123,214,0.55), rgba(245,243,239,0.5) 50%, rgba(232,161,92,0.55))",
+                  }}
+                />
+                <div className="grid gap-4 md:grid-cols-[0.8fr_1.2fr] md:gap-12">
+                  <h3 className="font-display text-2xl font-normal text-paper md:text-3xl">
+                    {service.title}
+                  </h3>
+                  <div className="max-w-prose">
+                    <p className="text-base leading-relaxed text-paper/60">
+                      {service.body}
+                    </p>
+                    {service.todo && (
+                      <PlaceholderNote>confirm description</PlaceholderNote>
+                    )}
+                  </div>
+                </div>
               </div>
             </Reveal>
           ))}

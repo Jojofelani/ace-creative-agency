@@ -33,8 +33,19 @@ export default function SmoothScroll({
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
 
+    // ScrollTrigger positions are measured at mount, but the Fraunces/Hanken web
+    // fonts and the code-split 3D chunk land later and reflow the page — which
+    // shifts every trigger's start/end. Recalculate once those settle so scrubs
+    // (especially the pinned hero and the Intro zoom below it) line up.
+    const refresh = () => ScrollTrigger.refresh();
+    if (document.fonts?.ready) document.fonts.ready.then(refresh);
+    window.addEventListener("load", refresh);
+    const t = window.setTimeout(refresh, 2000);
+
     return () => {
       gsap.ticker.remove(raf);
+      window.removeEventListener("load", refresh);
+      window.clearTimeout(t);
       lenis.destroy();
     };
   }, []);

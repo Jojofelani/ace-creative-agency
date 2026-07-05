@@ -3,9 +3,12 @@ import { Fraunces, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/providers/SmoothScroll";
 import Nav from "@/components/Nav";
+import SpaceBackground from "@/components/SpaceBackground";
+import Cursor from "@/components/ui/Cursor";
+import ScrollCue from "@/components/ui/ScrollCue";
 
 // Display type — used with restraint, headlines only. Italic is the signature:
-// the recurring "grounded" idea is always set in Fraunces italic.
+// the one key phrase each statement turns on is always set in Fraunces italic.
 const fraunces = Fraunces({
   variable: "--font-fraunces",
   subsets: ["latin"],
@@ -21,13 +24,12 @@ const hanken = Hanken_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "ACE Creative Agency. Brand, content and design in Accra",
+  title: "Ace Creative Agency | Powered by 360 Graphics",
   description:
-    "ACE is a creative & digital agency in Accra doing brand, content, and design that's culturally grounded, not generic.",
+    "A bold, fashion-forward, strategy-driven creative studio building digital experiences for global brands and ambitious startups.",
   openGraph: {
-    title: "ACE Creative Agency",
-    description:
-      "Brand, content, and design that's culturally grounded, not generic.",
+    title: "Ace Creative Agency | Powered by 360 Graphics",
+    description: "A bold, fashion-forward, strategy-driven creative studio.",
     type: "website",
   },
 };
@@ -40,8 +42,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fraunces.variable} ${hanken.variable}`}>
       <body>
+        <SpaceBackground />
         <Nav />
         <SmoothScroll>{children}</SmoothScroll>
+        {/* Fixed-position overlays live OUTSIDE the pinned hero so their
+            position:fixed isn't broken by GSAP's pin transform. */}
+        <Cursor />
+        <ScrollCue />
       </body>
     </html>
   );

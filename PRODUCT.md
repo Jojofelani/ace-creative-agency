@@ -8,7 +8,7 @@ brand
 
 Prospective clients of ACE Creative Agency (powered by 360 Graphics) — brands
 and founders in Accra and across Ghana, plus regional/global brands, looking for
-culturally-grounded brand, content, and design work. Their context: evaluating
+original brand, content, and design work with a point of view. Their context: evaluating
 whether ACE is the right studio, often on mobile and sometimes on slow
 connections (a real part of the Ghana audience). The job to be done: judge ACE's
 taste and capability quickly, feel it, and find a clear way to start a project.
@@ -16,7 +16,7 @@ taste and capability quickly, feel it, and find a clear way to start a project.
 ## Product Purpose
 
 An agency portfolio whose job is to *prove*, not claim, that ACE makes premium,
-culturally-grounded creative work. The site itself is the proof of what ACE can
+original creative work. The site itself is the proof of what ACE can
 do: the case-study work is the picture, the hand-coded glass crystal is the
 frame. Success = a visitor leaves feeling more creative than when they arrived,
 trusts the craft, and starts a project.
@@ -26,7 +26,7 @@ trusts the craft, and starts a project.
 Glassy, elegant, grounded. Voice is direct, conversational, and reflective —
 short declarative lines, never generic agency-speak. The mood is deep, quiet,
 and premium: colour comes from light refracting through glass, not from painted
-surfaces. Culturally grounded in Ghana, not generic-global. Emotionally, the
+surfaces. Original and specific, never generic-global. Emotionally, the
 page should feel like considered, expensive calm punctuated by one bold,
 memorable moment (the crystal), and should leave the visitor more creative than
 they arrived.
@@ -53,8 +53,8 @@ wanted — the rule is *spend boldness once*, not avoid boldness.
   section stays quiet and disciplined. The frame must never bury the work.
 - **Show, don't tell.** The site is the demonstration of ACE's capability.
   Don't describe the craft — perform it.
-- **Culturally grounded, not generic.** Specific to Accra and the real work
-  (Psalm 23, VivaLoKs), never interchangeable global-agency gloss.
+- **Original, not generic.** Rooted in the real work (Psalm 23, VivaLoKs) and a
+  genuine point of view, never interchangeable global-agency gloss.
 - **Leave them more creative.** Every choice serves the felt outcome, not just
   information delivery.
 

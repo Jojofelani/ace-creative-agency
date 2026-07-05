@@ -1,4 +1,5 @@
 import Reveal from "@/components/Reveal";
+import DrawLine from "@/components/scroll/DrawLine";
 import { Accent } from "@/components/ui/Accent";
 import { PlaceholderNote } from "@/components/ui/Placeholder";
 
@@ -12,21 +13,33 @@ export default function About() {
   return (
     <section id="about" className="rule-refract px-6 py-32 md:py-48">
       <div className="mx-auto flex max-w-4xl gap-7 md:gap-10">
-        {/* Vertical refraction rule — the divider language, turned on its side */}
-        <div
-          aria-hidden="true"
+        {/* Vertical refraction rule — draws downward like a beam of light as the
+            aside enters, retracts on the way up. */}
+        <DrawLine
+          vertical
           className="w-px shrink-0 self-stretch"
           style={{
             background: "linear-gradient(180deg, #6C7BD6, #E8A15C)",
           }}
         />
         <Reveal>
-          <p className="font-display text-2xl font-light leading-[1.4] tracking-tight text-paper md:text-[2rem]">
-            We make work the way we&apos;d want to be spoken to. Directly, and
-            with respect for where it lands. Culture isn&apos;t a garnish here.
-            It&apos;s <Accent>the starting point</Accent>.
+          <p className="mb-8 text-xs uppercase tracking-[0.22em] text-paper/45">
+            Who we are
           </p>
-          <PlaceholderNote>confirm about / voice copy</PlaceholderNote>
+          <div className="space-y-6">
+            <p className="font-display text-2xl font-light leading-[1.4] tracking-tight text-paper md:text-[2rem]">
+              Ace Creative Agency was founded on a simple belief: that brands
+              shouldn&apos;t just be seen, they should be <Accent>felt</Accent>.
+              Powered by 360 Graphics, we combine decades of technical expertise
+              with a fresh, fashion-forward design approach.
+            </p>
+            <p className="max-w-prose text-lg leading-relaxed text-paper/70">
+              We work with visionaries who refuse to compromise. From global
+              retailers like H&amp;M to disruptive tech startups, our process is
+              the same — uncover the truth, and tell it beautifully.
+            </p>
+          </div>
+          <PlaceholderNote>confirm client names (H&amp;M?) + brand story</PlaceholderNote>
         </Reveal>
       </div>
     </section>

@@ -151,17 +151,19 @@ brief), not a reflex pick.
   65–75ch.
 - **Label** (400, 0.75rem, tracking 0.22em, uppercase): The rationed eyebrow and
   case-study tags. Used sparingly, not above every section.
-- **Accent** (Fraunces italic, inherits size, 1.1): The recurring grounded idea,
-  set solid in Warm Refraction. Descenders need `line-height: 1.1` clearance.
+- **Accent** (Fraunces italic, inherits size, 1.1): The one key phrase per
+  statement (e.g. "point of view", "proof", "earns its place"), set solid in
+  Warm Refraction. Descenders need `line-height: 1.1` clearance.
 
 ### Named Rules
 **The One-Gradient Rule.** Exactly one gradient exists on the entire page: the
 hero accent line ("worth looking at"), cool-to-warm. Everywhere else the accent
 is a single solid warm tone. Gradient text is otherwise prohibited.
 
-**The Italic Through-Line Rule.** The one idea the page is about (being grounded,
-being felt) is always Fraunces italic, never bold, never a colour swap. Same
-family, same treatment, every time, so the eye learns it.
+**The Italic Through-Line Rule.** The one idea each statement turns on (the
+work being original, felt, worth looking at) is always Fraunces italic, never
+bold, never a colour swap. Same family, same treatment, every time, so the eye
+learns it.
 
 ## 4. Elevation
 

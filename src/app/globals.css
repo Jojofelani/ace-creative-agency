@@ -13,6 +13,14 @@
 
   --font-display: var(--font-fraunces);
   --font-body: var(--font-hanken);
+
+  /*
+    Eased curves (Tailwind v4 exposes these as `ease-out-quint` etc.).
+    The one rule holds in 2D too: everything eases, nothing is linear.
+  */
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 :root {
@@ -40,6 +48,120 @@ h6 {
 :focus-visible {
   outline: 2px solid var(--color-gold);
   outline-offset: 3px;
+}
+
+/*
+  Interactive glow card (see GlowCard.tsx). On hover, cool→gold→warm light lines
+  trace the card's EDGES only (a masked gradient border, not a whole-card glow),
+  and the card parallax-tilts toward the pointer. Driven by --rx/--ry/--glow.
+  Shared by the testimonials and the Selected Work panels.
+*/
+.glow-card {
+  --mx: 50%;
+  --my: 50%;
+  --rx: 0deg;
+  --ry: 0deg;
+  --glow: 0;
+  position: relative;
+  transform: perspective(1100px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 260ms var(--ease-out-quint);
+  will-change: transform;
+}
+/*
+  The edge line is a border ring, but its colour comes from a radial centred on
+  the cursor — so only the segment of the edge NEAREST the pointer lights up (in
+  the brand colours), and it tracks the mouse. The far edges stay dark.
+*/
+.glow-card::before,
+.glow-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px; /* line thickness */
+  background: radial-gradient(
+    46% 46% at var(--mx) var(--my),
+    var(--color-gold),
+    var(--color-refract-warm) 32%,
+    var(--color-refract-cool) 58%,
+    transparent 100%
+  );
+  /* show the gradient only as a border ring */
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: var(--glow);
+  transition: opacity 260ms var(--ease-out-quint);
+  pointer-events: none;
+}
+/* Soft copy of the lit segment gives that edge a tight glow (not the whole card). */
+.glow-card::after {
+  filter: blur(6px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .glow-card {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* When the custom refraction cursor is active, retire the native one. */
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none;
+}
+
+/*
+  Very subtle film grain for premium depth — a fixed, non-interactive overlay.
+  Kept faint (opacity ~0.04) so it reads as texture, not noise.
+*/
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@media (prefers-reduced-motion: reduce) {
+  body::after {
+    display: none;
+  }
+}
+
+/*
+  Tactile press — the "it reacts to me" moment, in 2D. One eased curve carries
+  both the color hover and the scale-down on press, so nothing snaps. Unlayered,
+  so it wins over Tailwind's `transition-colors` without needing it on the class.
+*/
+.press {
+  transition-property: transform, color, background-color, border-color;
+  transition-duration: 200ms;
+  transition-timing-function: var(--ease-out-quint);
+}
+.press:active {
+  transform: scale(0.97);
+}
+
+/*
+  Reduced-motion, CSS layer. The JS layers (Reveal, Lenis, the crystal) already
+  bail on this preference; this makes the CSS hover/press transitions honour it
+  too, completing the quality floor.
+*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .press:active {
+    transform: none;
+  }
 }
 
 /*
