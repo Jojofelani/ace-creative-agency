@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment, Lightformer, AdaptiveDpr, Preload } from "@react-three/drei";
 import AceType3D from "./AceType3D";
+import { useInViewport } from "@/lib/useInViewport";
 
 /**
  * The WebGL hero, isolated so it can be code-split out of the main bundle
@@ -17,10 +18,14 @@ export default function CrystalScene({
   scrollProgress: React.MutableRefObject<number>;
   intro: React.MutableRefObject<number>;
 }) {
+  const [wrapRef, inView] = useInViewport<HTMLDivElement>();
+
   return (
+    <div ref={wrapRef} style={{ width: "100%", height: "100%" }}>
     <Canvas
       camera={{ position: [0, 0, 9.2], fov: 42 }}
-      dpr={[1, 2]}
+      dpr={[1, 1.5]}
+      frameloop={inView ? "always" : "never"}
       gl={{ antialias: true, alpha: true }}
     >
       <AdaptiveDpr pixelated />
@@ -42,5 +47,6 @@ export default function CrystalScene({
         <Preload all />
       </Suspense>
     </Canvas>
+    </div>
   );
 }

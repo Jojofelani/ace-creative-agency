@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment, Lightformer, AdaptiveDpr } from "@react-three/drei";
 import GlassCrystal from "@/components/GlassCrystal";
+import { useInViewport } from "@/lib/useInViewport";
 
 /**
  * The original hero crystal, repurposed as a small, warm-lit idle accent in the
@@ -12,10 +13,13 @@ import GlassCrystal from "@/components/GlassCrystal";
  */
 export default function CrystalAccentScene() {
   const zero = useRef(0);
+  const [wrapRef, inView] = useInViewport<HTMLDivElement>();
   return (
+    <div ref={wrapRef} style={{ width: "100%", height: "100%" }}>
     <Canvas
       camera={{ position: [0, 0, 5], fov: 38 }}
       dpr={[1, 1.5]}
+      frameloop={inView ? "always" : "never"}
       gl={{ antialias: true, alpha: true }}
     >
       <AdaptiveDpr pixelated />
@@ -31,5 +35,6 @@ export default function CrystalAccentScene() {
 
       <GlassCrystal scrollProgress={zero} reducedMotion={false} />
     </Canvas>
+    </div>
   );
 }

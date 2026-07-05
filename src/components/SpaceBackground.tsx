@@ -23,7 +23,7 @@ export default function SpaceBackground() {
     if (!ctx) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     let w = 0;
     let h = 0;
     let stars: Star[] = [];

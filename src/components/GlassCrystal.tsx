@@ -83,17 +83,15 @@ export default function GlassCrystal({
         <MeshTransmissionMaterial
           transmission={1}
           thickness={1.2}
-          roughness={0.05}
+          roughness={0.08}
           ior={1.5}
-          chromaticAberration={0.06}
-          anisotropy={0.3}
-          distortion={0.2}
-          distortionScale={0.3}
-          temporalDistortion={0.1}
+          chromaticAberration={0.05}
           clearcoat={1}
           attenuationDistance={2}
           attenuationColor="#f5f3ef"
           color="#ffffff"
+          samples={4}
+          resolution={256}
         />
       </mesh>
     </Float>

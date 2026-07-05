@@ -115,18 +115,13 @@ export default function AceType3D({
             thickness={0.6}
             roughness={0.5}
             ior={1.45}
-            chromaticAberration={0.03}
-            anisotropicBlur={0.4}
-            distortion={0.1}
-            distortionScale={0.25}
-            temporalDistortion={0.05}
-            clearcoat={0.6}
+            chromaticAberration={0.02}
+            clearcoat={0.5}
             attenuationDistance={3}
             attenuationColor="#f5f3ef"
             color="#eef0ff"
-            backside
-            samples={6}
-            resolution={512}
+            samples={3}
+            resolution={256}
             side={THREE.DoubleSide}
           />
         </mesh>
