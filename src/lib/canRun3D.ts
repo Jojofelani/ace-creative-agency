@@ -18,19 +18,33 @@ export function canRun3D(): boolean {
     }
   };
 
-  // QA escape hatch: ?force3d bypasses the bandwidth/hardware heuristics (some
-  // environments misreport a slow connection) but still requires real WebGL.
+  // QA escape hatch: ?force3d bypasses every heuristic but still requires WebGL.
   if (window.location.search.includes("force3d")) return hasWebGL();
+
+  if (!hasWebGL()) return false;
 
   const nav = navigator as Navigator & {
     deviceMemory?: number;
     connection?: { saveData?: boolean; effectiveType?: string };
   };
-  if (nav.connection?.saveData) return false;
-  if (/(^|-)(2g|slow-2g|3g)$/.test(nav.connection?.effectiveType ?? "")) return false;
-  if (typeof nav.deviceMemory === "number" && nav.deviceMemory < 4) return false;
-  if (typeof nav.hardwareConcurrency === "number" && nav.hardwareConcurrency < 4)
-    return false;
 
-  return hasWebGL();
+  // Honour an explicit Data Saver preference on any device.
+  if (nav.connection?.saveData) return false;
+
+  // The connection / memory / core heuristics are meant to spare mid-range
+  // phones on slow data — NOT desktops that momentarily report a conservative
+  // connection. So only apply them to touch / small-screen devices; a WebGL-
+  // capable desktop always runs the full scene.
+  const lowPowerClass =
+    window.matchMedia("(pointer: coarse)").matches ||
+    window.matchMedia("(max-width: 820px)").matches;
+
+  if (lowPowerClass) {
+    if (/(^|-)(2g|slow-2g|3g)$/.test(nav.connection?.effectiveType ?? "")) return false;
+    if (typeof nav.deviceMemory === "number" && nav.deviceMemory < 4) return false;
+    if (typeof nav.hardwareConcurrency === "number" && nav.hardwareConcurrency < 4)
+      return false;
+  }
+
+  return true;
 }
